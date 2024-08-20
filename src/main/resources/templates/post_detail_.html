@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title th:text="${ post.subject }"></title>
+	<!--/* 타임리프, 상속(전체스타일적용), 공통요소 삽입/대체등 기법을 활용해서 관리 */-->
+	<link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+</head>
+
+<body>
+	<div class="container my-3">
+		<!-- 타임리프 표준주석 : 개발자만 볼수 있다 -->
+		<!--/* card 단위는 기본적으로 특정 콘텐츠 하나를 독립적 담는 구분 단위(라운드로 표현) */-->
+		<div class="card my-3">
+			<div class="card-header">
+				<!--/* 제목 */-->
+				<h3 th:text="${ post.subject}"></h3>
+			</div>
+			<div class="card-body">
+				<!--/* 내용 */-->
+				<div class="card-text" th:text="${ post.content}"></div>
+				<!--/* 작성시간 */-->
+				<div class="badge bg-light text-primary text-start" th:text="${ #temporals.format( post.getCreateDate(), 'yyyy-MM-dd HH:mm:ss')  }"></div>
+			</div>
+		</div>		
+	</div>
+	
+	<!-- 리뷰 등록 -->
+	<div class="container my-3">
+		<h3 class="border-bottom py-2 my-3"
+			th:text="|리뷰 ${#lists.size(post.reviewList)}개|"
+		></h3>
+		<h3 class="border-bottom py-2 my-3">리뷰 등록</h3>
+		<!-- 
+			클라이언트에서 서버로 데이터 전송 
+			action => url, 데이터를 보내고자 하는 목적지 주소
+			만약, 생략된다면?	현재 보여지는 페이지의 URL로 전송한다
+		-->
+		<form th:action="@{|/review/create/${post.id}|}" method="post">
+			<!-- input : 사용자의 입력을 받는 요소(텍스트,비밀번호,이메일,날짜,수치,..숨김) 
+				 키 : name 속성
+				 값 : value 속성
+				 문서(html)내 고유한값 지정 : id 속성 => html 문서내에서 특정 요소를 탐색할때 1순위 검색 대상
+				 	- 문서내 id값은 고유하다 => 찾는 방법 : CSS Selector => #아이디값
+				 	- name값과 id값을 동일하게 부여함
+			-->
+			<!-- <input type="hidden" name="pid" value="pid"/>  -->
+			<!-- 사용자가 잘 입력하고 등록 버튼을 누른다는 전제하게 진행
+				 차후, 입력폼 검사 추가 (js 레벨, 백엔드 레벨) 각각 확인				
+			 -->
+			 <!-- 
+			 	input type => 모바일에서 가상키보드의 레이아웃을 조정하는 단서
+			 	text, password, date, time, email, ...  <= html5에서 추가됨
+			  -->
+			<input type="text" name="content" id="content" />
+			<input type="submit" value="리뷰 등록"/>
+		</form>
+	</div>
+	
+	<!-- 리뷰 목록 노출 -->
+	<div class="container my-3">
+		<!-- 실습 5분, 리뷰 내용, 작성시간을 리스트로 표현하시오 -->
+		
+		<div class="card my-3 bg-warning" th:each="review : ${post.reviewList}">
+			<div class="card-body">				
+				<div class="card-text">
+					[[ |${ review.content} - 
+					    ${ #temporals.format( review.getCreateDate(), 'yyyy-MM-dd HH:mm:ss')  }|  ]]
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	
+</body>
+
+</html>

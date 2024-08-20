@@ -1,0 +1,42 @@
+프로젝트 뼈 대
+├─.gradle
+│  ├─8.8
+│  │  ├─checksums
+│  │  ├─dependencies-accessors   
+│  │  ├─executionHistory
+│  │  ├─expanded
+│  │  ├─fileChanges
+│  │  ├─fileHashes
+│  │  └─vcsMetadata
+│  ├─buildOutputCleanup
+│  └─vcs-1
+├─.settings
+├─build.gradle                  : 빌드 내용 기술, 써드 파트 모듈 추가시 기술해야 함
+├─bin
+│  ├─main
+│  │  ├─com
+│  │  │  └─web
+│  │  │      └─demo
+│  │  └─templates
+│  └─test
+│      └─com
+│          └─web
+│              └─demo
+├─gradle
+│  └─wrapper
+└─src
+    ├─main
+    │  ├─java                   : 소스 코드 작성(컨트롤러, 엔티티, 레퍼지토리, ...)
+    │  │  └─com
+    │  │      └─web
+    │  │          └─demo
+    │  │               └─TestApplication.java : 스프링어플리케이션 정의, 엔트리포인트, 메인, 자동생성
+    │  └─resources
+    │      ├─static             : 정적데이터위치 (*.js, *.css, *.png|jpg|..., )
+    │      ├─templates          : html 위치 ( 타임리프등 템플릿엔진을 통해 데이터를 조합하여 동적으로 html 생성하는 재료)
+    │      └─application.properties : 속성기술 => 환경변수(상수값) 설정
+    └─test                      : 단위 테스트용 자바 파일 위치
+        └─java
+            └─com
+                └─web
+                    └─demo

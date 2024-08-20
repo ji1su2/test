@@ -1,0 +1,80 @@
+
+<div th:fragment="frag_index_content"  class="content-wrapper">
+	<!-- 
+		form 태그 사용, 입력 2개(제목, 내용), post 등록버튼
+		"관리" => "등록" 혹은 "수정" 이라는 이름으로 동적 세팅 가능  
+	-->
+	<div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">Post 관리</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active"><a href="/post/list">Post 목록</a></li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+    
+	<section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-12 col-12">	
+	
+					<!-- 
+						- 제목, 내용 입력 폼 
+						- 입력 받는 화면 URL과 입력한 데이터가 전달되는 URL 이 동일하면 => action 생략 가능함
+					-->
+					<!--/* FIXME #REFACT: 입력 메소드 유동적 변경 */-->
+					<form th:object="${postForm}" method="#" th:method="${ method }">
+						<!-- 수동설정, csrf 관련 토큰 => 403 에러 회피 전략 -->
+						<input type="hidden" th:name="${ _csrf.parameterName }" 
+						       th:value="${ _csrf.token }"/>
+						<!-- 
+						    - th:object 세팅 => 오류 메세지창 추가 (th:if 추가하여 오류가 존재할대만 노출)
+							- 오류 발생시(입력 않하고 등록하는 경우), 하위 div라 활성화되서 메세지가 노출됨 
+							- 에러가 존재하면 해당 div가 노출됨
+						-->
+						<div th:replace="~{lib/frag :: formErrorFrag}"></div>
+						
+						<div class="my-3">
+							<!-- id값이 subject인 요소를 위한 라벨 -->
+							<label for="subject" class="form-label">제목</label>
+							<!--  
+								- name="subject" 삭제 처리 : PostForm에서 접근 가능하므로 없어도 된다 
+							    - th:field="*{subject}"  : 오류 발생시 값 복원 때문에 진행 -->
+							<input type="text"  th:field="*{subject}" id="subject" class="form-control" placeholder="제목을 입력하세요">
+						</div>
+						
+						<div class="my-3">
+							<label for="content" class="form-label">본문</label>
+							<!-- 여러줄에 걸쳐서 작성 -->
+							<textarea name="content" th:field="*{content}" id="content" class="form-control" rows="7"></textarea>
+						</div>
+						
+						<div class="my-3">
+							<input type="submit" value="저장하기" class="btn btn-warning">
+						</div>
+					</form>
+
+
+			</div>
+		  </div>
+	    </div>
+    </section>
+</div>
+
+
+
+
+
+
+
+
+
+

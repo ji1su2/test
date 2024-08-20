@@ -1,0 +1,63 @@
+<!-- 타임리프 주석 -->
+<!--/*-->
+++
+<!--*/-->
+
+<!-- html에서는 주석, 타임리프에서는 랜더링되는 프로토타입 주석, 
+		 결과적으로는 유저는 결과물만 확인, 주석 영역을 사라짐
+	 -->
+<!--/*/
+----
+/*/-->
+
+<div>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>1</th>
+				<th>2</th>
+				<th>3</th>
+				<th>4</th>
+				<th>5</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- 
+				- 반복문 추가 
+				- loop.index : 반복문의 순서 : 0 ~ +1 증가
+				- loop.count : 반복문의 순서 : 1 ~ +1 증가
+				- loop.size : 총 반복 횟수 == 요소의 총개수
+				- loop.first | loop.last | loop.odd | loop.even => true|false => th:if
+				- loop.current | ... : 현재 대입된 객체 == post
+				-->
+			<tr th:each="post, loop : ${posts1}">
+				<td th:text="${ loop.index }"></td>
+				<td th:text="${ loop.count }"></td>
+				<td>[[ ${ loop.odd } ]]</td>
+				<td>
+					<a th:href="@{|/post/detail/${ post.id }|}" th:text="${ post.subject }"></a>
+				</td>
+				<td th:text="${ post.getContent() }"></td>
+			</tr>
+
+
+			<!--/* th:each를 구동될때 대상 posts이 null이면 작동 X */-->
+			<tr th:each="post : ${posts}">
+				<td>100</td>
+				<!-- 구조에 맞게, 값이 세팅되는 형태를 실제형태와 동일하게 구성 -->
+				<td>
+					제목: [[ ${ post.subject } ]]
+				</td>
+				<!-- |특정 문자열 + 전달된 데이터값| : 결합해서 표현 -->
+				<td th:text="|상세내용:  ${ post.getContent() }|"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div>
+	<!-- 전달된 데이터가 기본 타입 데이터, 일종의 연산값 -->
+	<p th:text="${ dumy_year }"></p><!-- 글 단락 -->
+	<p th:text="${ obj.isAdmin() ? '참일때값' : '거짓일때값' }"></p>
+	<p th:text="${ obj.isAdmin() ? '관리자' : '유저이름' }"></p>
+</div>
